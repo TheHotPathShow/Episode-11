@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2edf7b33b7bf1b248b11901c237cd712
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 138c014e41992c24e9fecc4196de5832, type: 3}
+  SkeletonSource: {fileID: 6424451808671436563, guid: 50fe27a4ff731704694a0523a9818cf2,
+    type: 3}
+  AnimationClipSource: {fileID: 7400000, guid: 7686e9b511ef7cd49a420cc8d7a637ce, type: 2}

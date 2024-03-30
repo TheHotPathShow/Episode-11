@@ -163,21 +163,21 @@ public partial struct ThirdPersonCharacterVariableUpdateSystem : ISystem
             }
             
             // Handle Animation Events
-            var animatorEvents = SystemAPI.ManagedAPI.GetComponent<KyleAnimatorEvents>(characterData.AnimationEntity);
+            var animatorEvents = SystemAPI.ManagedAPI.GetComponent<CharacterSkinController>(characterData.AnimationEntity);
             var managedData = SystemAPI.ManagedAPI.GetComponent<KyleAnimationManagedData>(characterData.AnimationEntity);
-            while (animatorEvents.MoveNextFootstep())
-            {
-                if (managedData.FootstepAudioClips.Length > 0)
-                {
-                    var index = Random.Range(0, managedData.FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(managedData.FootstepAudioClips[index], localTransform.Position, animationData.FootstepAudioVolume);
-                }
-            }
-            
-            while (animatorEvents.MoveNextLand())
-            {
-                AudioSource.PlayClipAtPoint(managedData.LandingAudioClip, localTransform.Position, animationData.FootstepAudioVolume);
-            }
+            // while (animatorEvents.MoveNextFootstep())
+            // {
+            //     if (managedData.FootstepAudioClips.Length > 0)
+            //     {
+            //         var index = Random.Range(0, managedData.FootstepAudioClips.Length);
+            //         AudioSource.PlayClipAtPoint(managedData.FootstepAudioClips[index], localTransform.Position, animationData.FootstepAudioVolume);
+            //     }
+            // }
+            //
+            // while (animatorEvents.MoveNextLand())
+            // {
+            //     AudioSource.PlayClipAtPoint(managedData.LandingAudioClip, localTransform.Position, animationData.FootstepAudioVolume);
+            // }
         }
     }
 }

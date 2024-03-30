@@ -1971,8 +1971,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3541754002163558908}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f8af0573aab879f4c9cd410a4e0a39f9, type: 3}
-  m_Controller: {fileID: 9100000, guid: 535d24752e3d6444da644e79e90ec2ca, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
+  m_Controller: {fileID: 9100000, guid: 13f6b110b91a15c4ba6469fbe4339fb6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2005,7 +2005,6 @@ MonoBehaviour:
   - {r: 2, g: 0.25882354, b: 0.25882354, a: 1}
   - {r: 0.72790754, g: 2, b: 0.26178014, a: 1}
   - {r: 2, g: 0.87978274, b: 0.26178014, a: 1}
-  eyeState: 0
 --- !u!1 &3921334144448749991
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class CharacterSkinController : MonoBehaviour, IAddMonoBehaviourToEntityO
         animator.SetTrigger(trigger);
     }
 
-    void ChangeMaterialSettings(int index)
+    public void ChangeMaterialSettings(int index)
     {
         foreach (var r in characterMaterials)
         {
@@ -69,7 +69,7 @@ public class CharacterSkinController : MonoBehaviour, IAddMonoBehaviourToEntityO
         }
     }
 
-    void ChangeEyeOffset(EyePosition pos)
+    public void ChangeEyeOffset(EyePosition pos)
     {
         var offset = pos switch
         {
