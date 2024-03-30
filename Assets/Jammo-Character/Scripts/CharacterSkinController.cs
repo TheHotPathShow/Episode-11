@@ -1,17 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CharacterSkinController : MonoBehaviour
+public class CharacterSkinController : MonoBehaviour, IAddMonoBehaviourToEntityOnAnimatorInstantiation
 {
     Animator animator;
     Renderer[] characterMaterials;
 
+    // Maps the index to the corresponding material and eye color
     public Texture2D[] albedoList;
     [ColorUsage(true,true)]
     public Color[] eyeColors;
+    
+    // Enum to control the eye offset
     public enum EyePosition { normal, happy, angry, dead}
-    public EyePosition eyeState;
+    
+    static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    static readonly int BaseMap = Shader.PropertyToID("_BaseMap");
 
     // Start is called before the first frame update
     void Start()
@@ -57,41 +60,30 @@ public class CharacterSkinController : MonoBehaviour
 
     void ChangeMaterialSettings(int index)
     {
-        for (int i = 0; i < characterMaterials.Length; i++)
+        foreach (var r in characterMaterials)
         {
-            if (characterMaterials[i].transform.CompareTag("PlayerEyes"))
-                characterMaterials[i].material.SetColor("_EmissionColor", eyeColors[index]);
+            if (r.transform.CompareTag("PlayerEyes"))
+                r.material.SetColor(EmissionColor, eyeColors[index]);
             else
-                characterMaterials[i].material.SetTexture("_BaseMap",albedoList[index]);
+                r.material.SetTexture(BaseMap, albedoList[index]);
         }
     }
 
     void ChangeEyeOffset(EyePosition pos)
     {
-        Vector2 offset = Vector2.zero;
-
-        switch (pos)
+        var offset = pos switch
         {
-            case EyePosition.normal:
-                offset = new Vector2(0, 0);
-                break;
-            case EyePosition.happy:
-                offset = new Vector2(.33f, 0);
-                break;
-            case EyePosition.angry:
-                offset = new Vector2(.66f, 0);
-                break;
-            case EyePosition.dead:
-                offset = new Vector2(.33f, .66f);
-                break;
-            default:
-                break;
-        }
+            EyePosition.normal => new Vector2(0, 0),
+            EyePosition.happy => new Vector2(.33f, 0),
+            EyePosition.angry => new Vector2(.66f, 0),
+            EyePosition.dead => new Vector2(.33f, .66f),
+            _ => Vector2.zero
+        };
 
-        for (int i = 0; i < characterMaterials.Length; i++)
+        foreach (var r in characterMaterials)
         {
-            if (characterMaterials[i].transform.CompareTag("PlayerEyes"))
-                characterMaterials[i].material.SetTextureOffset("_BaseMap", offset);
+            if (r.transform.CompareTag("PlayerEyes"))
+                r.material.SetTextureOffset(BaseMap, offset);
         }
     }
 }
