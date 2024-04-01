@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15300a66ca4245c28d66f77d171cfd29, type: 3}
+  m_Name: Textures for PS5
+  m_EditorClassIdentifier: 
+  Textures:
+  - Name: i
+    Texture: {fileID: 2800000, guid: 328bed919a96a394db6c56ab62067622, type: 3}
+  - Name: j
+    Texture: {fileID: 2800000, guid: b9e4588f0a067bf468cb6801bc117f4d, type: 3}
+  - Name: k
+    Texture: {fileID: 2800000, guid: 4000d6e9beeccc848b2d20d1a34118ff, type: 3}
+  - Name: l
+    Texture: {fileID: 2800000, guid: 137c49b0c2c09bf43b3143ed04ffdbe0, type: 3}
+  - Name: enter
+    Texture: {fileID: 2800000, guid: cbf1fd2f33fe4bd499370cb3cdd603e8, type: 3}
+  - Name: escape
+    Texture: {fileID: 2800000, guid: 47b76889b61a0e14e9b89ccb14236834, type: 3}
+  - Name: space
+    Texture: {fileID: 2800000, guid: 03745f3aa289d9d40b74570005d674db, type: 3}

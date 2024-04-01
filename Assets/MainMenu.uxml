@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="PlayerPane" src="project://database/Assets/PlayerPane.uxml?fileID=9197481963319205126&amp;guid=570f97a6060d41f488c02eef92abd792&amp;type=3#PlayerPane" />
+    <Style src="project://database/Assets/UI/style.uss?fileID=7433441132597879392&amp;guid=0a01c7e91f577b6478a785cc78bd8de6&amp;type=3#style" />
+    <ui:VisualElement name="WrappedOuter" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="MainMenu" style="flex-grow: 1; align-self: flex-end; justify-content: flex-end; width: 100%; align-items: flex-end; visibility: visible;">
+            <ui:VisualElement name="RightPanel" style="flex-grow: 1; justify-content: center; width: 35%;">
+                <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Start" class="main-menu-btn" />
+                <ui:Button text="Game Info" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GameInfo" class="main-menu-btn" />
+                <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Exit" class="main-menu-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="Enter Game Menu" style="flex-grow: 1; position: absolute; left: 0; top: 0; bottom: 0; right: 0; display: none;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+            <ui:Instance template="PlayerPane" name="Player1Pane" style="width: 25%;" />
+            <ui:Instance template="PlayerPane" name="Player2Pane" style="width: 25%;" />
+            <ui:Instance template="PlayerPane" name="Player3Pane" style="width: 25%;" />
+            <ui:Instance template="PlayerPane" name="Player4Pane" style="width: 25%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -12,6 +12,11 @@ public struct CameraTarget : IComponentData
     public Entity TargetEntity;
 }
 
+public struct PlayerID : IComponentData
+{
+    public byte Value; // 0-3
+}
+
 [Serializable]
 public struct OrbitCamera : IComponentData
 {

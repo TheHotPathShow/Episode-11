@@ -24,7 +24,7 @@ public partial class ThirdPersonPlayerInputsSystem : SystemBase
     {
         m_Input = new KyleInput();
         m_Input.Enable();
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
         RequireForUpdate<FixedTickSystem.Singleton>();
     }
 

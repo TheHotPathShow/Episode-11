@@ -1,0 +1,25 @@
+.main-menu-btn {
+    font-size: 38px;
+    background-image: url('project://database/Assets/kenney/fantasy-ui/Transparent%20border/panel-transparent-border-027.png?fileID=21300000&guid=b4f7afaccae492c4aa0db753881ebd1e&type=3#panel-transparent-border-027');
+    -unity-background-image-tint-color: rgba(0, 106, 255, 0.47);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    transition-timing-function: ease-in;
+    transition-duration: 0.1s;
+    width: 100%;
+}
+
+.main-menu-btn:hover {
+    font-size: 72px;
+    -unity-background-image-tint-color: rgb(14, 186, 224);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.4s;
+}

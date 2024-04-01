@@ -6,6 +6,10 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class OrbitCameraAuthoring : MonoBehaviour
 {
+    [Header("Must Setup")]
+    [Range(0,3)]
+    public int PlayerID = 0;
+    
     [Header("Rotation")]
     public float RotationSpeed = 2f;
     public float MaxVAngle = 89f;
@@ -60,6 +64,7 @@ public class OrbitCameraAuthoring : MonoBehaviour
             });
             
             AddComponent(entity, new OrbitCameraControl());
+            AddComponent(entity, new PlayerID { Value =  (byte)authoring.PlayerID});
             
             var ignoredEntitiesBuffer = AddBuffer<OrbitCameraIgnoredEntityBufferElement>(entity);
             foreach (var ignoredEntity in authoring.IgnoredEntities)

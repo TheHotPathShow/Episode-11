@@ -2,10 +2,12 @@ using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
-public class SyncWithEntityOrbitCamera : MonoBehaviour
+public class SyncWithPlayerOrbitCamera : MonoBehaviour
 {
-    public static Camera Instance;
-    void Awake() => Instance = GetComponent<Camera>();
+    public static Camera[] Instance = new Camera[4];
+    [Range(0, 3)]
+    [SerializeField] int BelongsToPlayer = 0;
+    void Awake() => Instance[BelongsToPlayer] = GetComponent<Camera>();
 }
 
 [UpdateInGroup(typeof(PresentationSystemGroup))]
@@ -13,11 +15,12 @@ public partial class MainCameraSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        if (SyncWithEntityOrbitCamera.Instance != null 
-            && SystemAPI.TryGetSingletonEntity<OrbitCamera>(out var mainEntityCameraEntity))
+        if (SyncWithPlayerOrbitCamera.Instance == null && SyncWithPlayerOrbitCamera.Instance?.Length != 4)
+            return;
+        
+        foreach (var (orbitCamLtw, orbitCamPlayerID) in SystemAPI.Query<LocalToWorld, PlayerID>().WithAll<OrbitCamera>())
         {
-            var targetLocalToWorld = SystemAPI.GetComponent<LocalToWorld>(mainEntityCameraEntity);
-            SyncWithEntityOrbitCamera.Instance.transform.SetPositionAndRotation(targetLocalToWorld.Position, targetLocalToWorld.Rotation);
+            SyncWithPlayerOrbitCamera.Instance[orbitCamPlayerID.Value]?.transform.SetPositionAndRotation(orbitCamLtw.Position, orbitCamLtw.Rotation);
         }
     }
 }
