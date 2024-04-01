@@ -48,6 +48,7 @@ public class ThirdPersonCharacterAuthoring : MonoBehaviour
             });
             AddComponent<ThirdPersonCharacterInput>(entity);
             AddComponent<ThirdPersonPlayerInputs>(entity);
+            AddComponentObject(entity, new ControllerReference());
         }
     }
 

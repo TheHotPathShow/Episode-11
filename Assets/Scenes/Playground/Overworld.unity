@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnOnPlayerSpawn:
-  - {fileID: 7568817337597995144, guid: 492a184cc1501fe4da86d69b5eddc366, type: 3}
   - {fileID: 1692896102597148395, guid: 5fbcc801dea8fd640a004697d22ed448, type: 3}
+  - {fileID: 7568817337597995144, guid: 492a184cc1501fe4da86d69b5eddc366, type: 3}
 --- !u!4 &1214988511
 Transform:
   m_ObjectHideFlags: 0

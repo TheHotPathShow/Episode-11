@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerEyes
   - CinemachineTarget
+  - DisableInGame
   layers:
   - Default
   - TransparentFX

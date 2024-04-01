@@ -60,6 +60,9 @@ public class CharacterSkinController : MonoBehaviour, IAddMonoBehaviourToEntityO
 
     public void ChangeMaterialSettings(int index)
     {
+        if (characterMaterials == null)
+            Start();
+        
         foreach (var r in characterMaterials)
         {
             if (r.transform.CompareTag("PlayerEyes"))

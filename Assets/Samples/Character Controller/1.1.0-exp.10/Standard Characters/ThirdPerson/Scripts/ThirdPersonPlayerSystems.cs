@@ -19,31 +19,28 @@ public struct ThirdPersonPlayerInputs : IComponentData
 [UpdateInGroup(typeof(InitializationSystemGroup))]
 public partial class ThirdPersonPlayerInputsSystem : SystemBase
 {
-    KyleInput m_Input;
     protected override void OnCreate()
     {
-        m_Input = new KyleInput();
-        m_Input.Enable();
-        // Cursor.lockState = CursorLockMode.Locked;
         RequireForUpdate<FixedTickSystem.Singleton>();
+        RequireForUpdate<QueueToStartGame>();
     }
 
-    protected override void OnDestroy()
+    protected override void OnStartRunning()
     {
-        m_Input.Disable();
+        Cursor.lockState = CursorLockMode.Locked;
     }
-
+    
     protected override void OnUpdate()
     {
         uint tick = SystemAPI.GetSingleton<FixedTickSystem.Singleton>().Tick;
         
-        foreach (var playerInputs in SystemAPI.Query<RefRW<ThirdPersonPlayerInputs>>())
+        foreach (var (playerInputs, controllerReference) in SystemAPI.Query<RefRW<ThirdPersonPlayerInputs>, ControllerReference>())
         {
-            playerInputs.ValueRW.MoveInput = m_Input.Player.Move.ReadValue<Vector2>();
-            playerInputs.ValueRW.CameraLookInput = m_Input.Player.Look.ReadValue<Vector2>();
-            playerInputs.ValueRW.SprintIsHeld = m_Input.Player.Sprint.IsPressed();
+            playerInputs.ValueRW.MoveInput = controllerReference.Value.Player.Move.ReadValue<Vector2>();
+            playerInputs.ValueRW.CameraLookInput = controllerReference.Value.Player.Look.ReadValue<Vector2>();
+            playerInputs.ValueRW.SprintIsHeld = controllerReference.Value.Player.Sprint.IsPressed();
             playerInputs.ValueRW.CameraZoomInput = -Input.mouseScrollDelta.y;
-            if (m_Input.Player.Jump.triggered) 
+            if (controllerReference.Value.Player.Jump.triggered) 
                 playerInputs.ValueRW.JumpPressed.Set(tick);
         }
     }

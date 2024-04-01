@@ -10,12 +10,18 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Enter Game Menu" style="flex-grow: 1; position: absolute; left: 0; top: 0; bottom: 0; right: 0; display: none;">
+    <ui:VisualElement name="EnterGameMenu" style="flex-grow: 1; position: absolute; left: 0; top: 0; bottom: 0; right: 0; display: none;">
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
             <ui:Instance template="PlayerPane" name="Player1Pane" style="width: 25%;" />
             <ui:Instance template="PlayerPane" name="Player2Pane" style="width: 25%;" />
             <ui:Instance template="PlayerPane" name="Player3Pane" style="width: 25%;" />
             <ui:Instance template="PlayerPane" name="Player4Pane" style="width: 25%;" />
         </ui:VisualElement>
+        <ui:VisualElement style="flex-direction: row; align-self: center;">
+            <ui:Label tabindex="-1" text="Waiting for players (0/2)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="WaitText" style="-unity-text-align: upper-center; font-size: 48px; -unity-font-style: bold;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="GameHideNotUsedPlayer4Region" style="position: absolute; left: 50%; top: 50%; bottom: 0; right: 0; display: none; background-color: rgb(32, 22, 22); align-self: center; justify-content: center;">
+        <ui:Label tabindex="-1" text="No user to see here lol" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 48px;" />
     </ui:VisualElement>
 </ui:UXML>

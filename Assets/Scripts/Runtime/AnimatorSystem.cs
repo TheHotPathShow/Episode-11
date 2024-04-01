@@ -8,6 +8,7 @@ public interface IAddMonoBehaviourToEntityOnAnimatorInstantiation {}
 struct AnimatorInstantiationData : IComponentData
 {
     public UnityObjectRef<GameObject> AnimatorGameObject;
+    public int LookIndex;
 }
 
 class AnimatorCleanup : ICleanupComponentData
@@ -44,6 +45,8 @@ partial struct AnimatorSystem : ISystem
             {
                 if (mb is MonoBehaviour monoBehaviour)
                     state.EntityManager.AddComponentObject(entity, monoBehaviour);
+                if (mb is CharacterSkinController characterSkinController)
+                    characterSkinController.ChangeMaterialSettings(data.LookIndex);
             }
         }
 

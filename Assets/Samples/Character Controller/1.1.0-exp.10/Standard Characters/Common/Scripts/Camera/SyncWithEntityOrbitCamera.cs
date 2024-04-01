@@ -7,7 +7,11 @@ public class SyncWithPlayerOrbitCamera : MonoBehaviour
     public static Camera[] Instance = new Camera[4];
     [Range(0, 3)]
     [SerializeField] int BelongsToPlayer = 0;
-    void Awake() => Instance[BelongsToPlayer] = GetComponent<Camera>();
+    void Awake()
+    {
+        Instance[BelongsToPlayer] = GetComponent<Camera>();
+        gameObject.SetActive(false);
+    }
 }
 
 [UpdateInGroup(typeof(PresentationSystemGroup))]
