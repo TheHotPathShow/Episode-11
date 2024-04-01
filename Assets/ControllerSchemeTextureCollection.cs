@@ -25,8 +25,11 @@ public class ControllerSchemeTextureCollection : ScriptableObject
             foreach (var kvp in Textures) 
                 m_CachedLookup[kvp.Name] = kvp.Texture;
         }
-        
-        return m_CachedLookup[name];
+
+        var val = m_CachedLookup.GetValueOrDefault(name);
+        if (val == null)
+            Debug.LogWarning($"No texture found for {name}");
+        return val;
     }
 
     public Texture2D GetFromActionAndDevice(InputAction action, InputDevice device)
@@ -51,14 +54,14 @@ public class ControllerSchemeTextureCollection : ScriptableObject
             var downName = action.bindings[bindingIndex + 1].path.Split('/')[1];
             var leftName = action.bindings[bindingIndex + 2].path.Split('/')[1];
             var rightName = action.bindings[bindingIndex + 3].path.Split('/')[1];
-            Debug.Log($"Up: {upName}, Down: {downName}, Left: {leftName}, Right: {rightName}");
+            // Debug.Log($"Up: {upName}, Down: {downName}, Left: {leftName}, Right: {rightName}");
             return GenerateDirectionalKeyboardTexture(
                 GetFromName(upName), GetFromName(downName), 
                 GetFromName(leftName), GetFromName(rightName));
         }
         
         var buttonName = binding.path.Split('/')[1];
-        Debug.Log($"Button {buttonName}");
+        // Debug.Log($"Button {buttonName}");
         return GetFromName(buttonName);
     }
     
@@ -67,15 +70,25 @@ public class ControllerSchemeTextureCollection : ScriptableObject
         // 3x2 grid,
         // up and down should be in the middle column,
         // left right should be in bottom row, left and right of the middle column
-        var width = up.width;
-        var height = up.height;
-        var combined = new Texture2D(width*3, height*2);
-        combined.SetPixels(width, 0, up.width, up.height, up.GetPixels());
-        combined.SetPixels(width, height, down.width, down.height, down.GetPixels());
-        combined.SetPixels(0, height, left.width, left.height, left.GetPixels());
-        combined.SetPixels(width*2, height, right.width, right.height, right.GetPixels());
-        combined.Apply();
+        var width = down.width;
+        var height = down.height;
         
+        
+        var combined = new Texture2D(width*3, height*2);
+        var clearCol = new Color[combined.width * combined.height];
+        for (var i = 0; i < clearCol.Length; i++)
+            clearCol[i] = Color.clear;
+        combined.SetPixels(clearCol);
+        
+        if (up != null)
+            combined.SetPixels(width, height, width, height, up.GetPixels());
+        if (down != null)
+            combined.SetPixels(width, 0, down.width, down.height, down.GetPixels());
+        if (left != null)
+            combined.SetPixels(0, 0, left.width, left.height, left.GetPixels());
+        if (right != null)
+            combined.SetPixels(width*2, 0, right.width, right.height, right.GetPixels());
+        combined.Apply();
         return combined;
     }
 }

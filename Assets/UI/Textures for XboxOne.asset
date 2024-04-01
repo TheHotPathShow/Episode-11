@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15300a66ca4245c28d66f77d171cfd29, type: 3}
-  m_Name: Textures for PS5
+  m_Name: Textures for XboxOne
   m_EditorClassIdentifier: 
   Textures:
   - Name: leftStick
-    Texture: {fileID: 2800000, guid: a79c2e15f1f469b468b4cb938368e5e8, type: 3}
+    Texture: {fileID: 2800000, guid: d99ab95b264dc3049a75be1dab011b15, type: 3}
   - Name: rightStick
-    Texture: {fileID: 2800000, guid: 8ed54355bdf82d046822b8525af55bb0, type: 3}
+    Texture: {fileID: 2800000, guid: dfa0f18d57756a14ebd312842e670d45, type: 3}
   - Name: buttonSouth
-    Texture: {fileID: 2800000, guid: 8b61dfae350262144b2506b46addeeea, type: 3}
+    Texture: {fileID: 2800000, guid: b72827a650952f9498295eb7e280404c, type: 3}
   - Name: rightShoulder
-    Texture: {fileID: 2800000, guid: c5ec048bd25efc64491b54584a0ef8f8, type: 3}
+    Texture: {fileID: 2800000, guid: e51405a3cf4b329419c54bafd47fc54d, type: 3}
   - Name: start
-    Texture: {fileID: 2800000, guid: 061241807ae16f44ea9c10767902d2de, type: 3}
+    Texture: {fileID: 2800000, guid: d9b7fdeb9d82fdd499b0432cf5bedafe, type: 3}
   - Name: buttonEast
-    Texture: {fileID: 2800000, guid: 51fbf6467a18f00468bc70443ab173b9, type: 3}
+    Texture: {fileID: 2800000, guid: 01cbfe423347b124f9181a4bfc636ae9, type: 3}

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement style="flex-shrink: 1; flex-direction: row; margin-right: 15px; margin-left: 15px; margin-bottom: 10px; justify-content: space-between; align-items: center;">
+        <ui:Label name="ActionName" tabindex="-1" text="Move:" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 32px;" />
+        <ui:VisualElement name="Icon" style="width: 48px; height: 48px; background-image: url(&apos;project://database/Assets/kenney/inputprompts-ui/Keyboard%20&amp;%20Mouse/keyboard_a_outline.png?fileID=2800000&amp;guid=6710efdb49e06434faf10df20c0cd1d4&amp;type=3#keyboard_a_outline&apos;);" />
+    </ui:VisualElement>
+</ui:UXML>

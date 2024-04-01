@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15300a66ca4245c28d66f77d171cfd29, type: 3}
+  m_Name: Textures for Keyboard
+  m_EditorClassIdentifier: 
+  Textures:
+  - Name: i
+    Texture: {fileID: 2800000, guid: 328bed919a96a394db6c56ab62067622, type: 3}
+  - Name: j
+    Texture: {fileID: 2800000, guid: b9e4588f0a067bf468cb6801bc117f4d, type: 3}
+  - Name: k
+    Texture: {fileID: 2800000, guid: 4000d6e9beeccc848b2d20d1a34118ff, type: 3}
+  - Name: l
+    Texture: {fileID: 2800000, guid: 137c49b0c2c09bf43b3143ed04ffdbe0, type: 3}
+  - Name: enter
+    Texture: {fileID: 2800000, guid: cbf1fd2f33fe4bd499370cb3cdd603e8, type: 3}
+  - Name: escape
+    Texture: {fileID: 2800000, guid: 47b76889b61a0e14e9b89ccb14236834, type: 3}
+  - Name: space
+    Texture: {fileID: 2800000, guid: 03745f3aa289d9d40b74570005d674db, type: 3}
+  - Name: w
+    Texture: {fileID: 2800000, guid: 8545588d83d2ccf42934a1aa08820128, type: 3}
+  - Name: s
+    Texture: {fileID: 2800000, guid: a4e7c4442fecd564da11dea304e114ae, type: 3}
+  - Name: a
+    Texture: {fileID: 2800000, guid: 6710efdb49e06434faf10df20c0cd1d4, type: 3}
+  - Name: d
+    Texture: {fileID: 2800000, guid: f596bdc1618c3fd489e06267e9312e15, type: 3}
+  - Name: leftShift
+    Texture: {fileID: 2800000, guid: a4e70a8396e87774cb3d154ee031b830, type: 3}
+  - Name: upArrow
+    Texture: {fileID: 2800000, guid: b93d86b728ea9664ca9d5334edf91a48, type: 3}
+  - Name: downArrow
+    Texture: {fileID: 2800000, guid: 14534f5bcfc8d9e4e8ce68912509dd8b, type: 3}
+  - Name: leftArrow
+    Texture: {fileID: 2800000, guid: 68ac9ec5022d43044b453357056b0d3f, type: 3}
+  - Name: rightArrow
+    Texture: {fileID: 2800000, guid: f9851518a27e6c848aa60212c10b12b7, type: 3}

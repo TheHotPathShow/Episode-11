@@ -2852,6 +2852,14 @@ MonoBehaviour:
   - {fileID: 8600000, guid: 3cdbc8c3bedc58d40a62d03d5d07ca70, type: 2}
   - {fileID: 8600000, guid: 0d7dd53e94c4dec478797810fbd67569, type: 2}
   - {fileID: 8600000, guid: 3106d38237bab9f48878ba101b40ee1a, type: 2}
+  PlayerInputDescription: {fileID: 9197481963319205126, guid: 6ab3519be332b804984a66b6b4d89042, type: 3}
+  ControllerNameAndTexturePairs:
+  - Name: HID:DualSense Wireless Controller
+    TextureCollection: {fileID: 11400000, guid: 79009b327cc5b6a458f63dc17e4ef880, type: 2}
+  - Name: 'RawInput:'
+    TextureCollection: {fileID: 11400000, guid: 93090d21f6062de45b89526aeda97875, type: 2}
+  - Name: 'XInput:'
+    TextureCollection: {fileID: 11400000, guid: 970452377ab362045bb96cea27d4f5ec, type: 2}
 --- !u!1 &1398094500
 GameObject:
   m_ObjectHideFlags: 0

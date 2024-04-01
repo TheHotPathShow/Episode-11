@@ -9,13 +9,24 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Users;
-using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UIElements;
 
 public class UIHook : MonoBehaviour
 {
     public RenderTexture[] PlayerPreviews = new RenderTexture[4];
+    public VisualTreeAsset PlayerInputDescription;
+    public ControllerNameAndTextureCollectionPair[] ControllerNameAndTexturePairs = Array.Empty<ControllerNameAndTextureCollectionPair>();
     
+    [Serializable]
+    public struct ControllerNameAndTextureCollectionPair
+    {
+        public string Name;
+        public ControllerSchemeTextureCollection TextureCollection;
+    }
+    
+    public ControllerSchemeTextureCollection GetSchemeTextureCollectionFromName(string name) 
+        => ControllerNameAndTexturePairs.FirstOrDefault(pair => pair.Name == name).TextureCollection;
+
     public static UIHook Instance { get; private set; }
     public static UIDocument UIDocument { get; private set; }
     void Awake()
@@ -77,11 +88,10 @@ partial struct UISystem : ISystem, ISystemStartStop
             return (playersReady, totalRequiredPlayers);
         }
         
-        public string GetWaitingPlayersText(out bool allPlayersReady)
+        public string GetWaitingPlayersText()
         {
             var (playersReady, totalRequiredPlayers) = GetPlayerJoinStatus();
-            allPlayersReady = playersReady == totalRequiredPlayers;
-            return allPlayersReady 
+            return playersReady == totalRequiredPlayers 
                 ? $"All players ready ({playersReady}/{totalRequiredPlayers})" 
                 : $"Waiting for players ({playersReady}/{totalRequiredPlayers})";
         }
@@ -140,20 +150,26 @@ partial struct UISystem : ISystem, ISystemStartStop
                         InputUser.PerformPairingWithDevice(mouse, user);
                 }
 
-                // List Controls in the UI
-                // var texturesForController = new ControllerSchemeTextureCollection();
-                // foreach (var action in playerController)
-                // {
-                //     var textureForAction = texturesForController.GetFromActionAndDevice(action, control.device);
-                // }
                 
-                Debug.Log($"Created player controller {availableSlot + 1}");
+                // Debug.Log($"Created player controller {availableSlot + 1}");
 
                 // Set up the player preview images
                 var playerPane = UIHook.UIDocument.rootVisualElement.Q<VisualElement>($"Player{availableSlot + 1}Pane");
                 playerPane.Q<VisualElement>("preview").style.backgroundImage = Background.FromRenderTexture(UIHook.Instance.PlayerPreviews[availableSlot]);
                 playerPane.Q<Label>("Name").text = $"Not Ready (press to ready)";
-                // playerPane.Q<VisualElement>("ReadyButton").style.backgroundImage = texturesForController.GetFromActionAndDevice(playerController.Player.Jump, control.device);
+                
+                // List Controls in the UI
+                // Debug.Log($"Listing controls for `{control.device.description.interfaceName}:{control.device.description.product}`");
+                var texturesForController = UIHook.Instance.GetSchemeTextureCollectionFromName($"{control.device.description.interfaceName}:{control.device.description.product}");
+                var top = playerPane.Q<VisualElement>("top");
+                foreach (var action in playerController)
+                {
+                    var actionElement = UIHook.Instance.PlayerInputDescription.CloneTree();
+                    actionElement.Q<Label>("ActionName").text = action.name;
+                    actionElement.Q<VisualElement>("Icon").style.backgroundImage = texturesForController.GetFromActionAndDevice(action, control.device);
+                    top.Add(actionElement);
+                }
+                playerPane.Q<VisualElement>("ReadyButton").style.backgroundImage = texturesForController.GetFromActionAndDevice(playerController.Player.Jump, control.device);
 
                 var inputPuppetEntity = em.CreateEntity(stackalloc []{ ComponentType.ReadWrite<InputPuppetTag>() });
                 em.SetName(inputPuppetEntity, $"InputPuppet for S{availableSlot + 1}");
@@ -164,12 +180,12 @@ partial struct UISystem : ISystem, ISystemStartStop
                     UserIndex = user.index
                 });
                 
-                waitText.text = singletonManaged.GetWaitingPlayersText(out _);
+                waitText.text = singletonManaged.GetWaitingPlayersText();
                 singletonManaged.menuActions[availableSlot].Jump = _ =>
                 {
                     singletonManaged.playerReady[availableSlot] = !singletonManaged.playerReady[availableSlot];
                     playerPane.Q<Label>("Name").text = singletonManaged.playerReady[availableSlot] ? "Ready" : "Not Ready (press to ready)";
-                    waitText.text = singletonManaged.GetWaitingPlayersText(out var _);
+                    waitText.text = singletonManaged.GetWaitingPlayersText();
                 };
                 
                 playerController.Player.Jump.started += singletonManaged.menuActions[availableSlot].Jump;
@@ -224,10 +240,13 @@ partial struct UISystem : ISystem, ISystemStartStop
                     em.DestroyEntity(inputPuppetEntity);
                     playerPane.Q<VisualElement>("preview").style.backgroundImage = null;
                     playerPane.Q<Label>("Name").text = "Any button to connect";
+                    while (top.childCount > 1) 
+                        top.RemoveAt(1);
                     singletonManaged.slotOccupied[availableSlot] = false;
                     singletonManaged.playerReady[availableSlot] = false;
                     user.UnpairDevicesAndRemoveUser();
                     InputUser.listenForUnpairedDeviceActivity++;
+                    waitText.text = singletonManaged.GetWaitingPlayersText();
                 };
                 playerController.Player.Escape.started += singletonManaged.menuActions[availableSlot].Escape;
                 

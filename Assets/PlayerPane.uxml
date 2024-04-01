@@ -7,21 +7,16 @@
                         <ui:VisualElement style="flex-shrink: 1; flex-grow: 1; height: 40%;">
                             <AspectRatioPanel aspect-ratio-x="1" aspect-ratio-y="1" balance-y="0" balance-x="50" name="AspectRatioPanel" style="padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; position: relative; top: 0; width: 100%;">
                                 <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/kenney/fantasy-ui/Transparent%20center/panel-transparent-center-027.png?fileID=21300000&amp;guid=8daad3f6ecf9fb946a7526e075c313bd&amp;type=3#panel-transparent-center-027&apos;); -unity-background-image-tint-color: rgb(217, 0, 0);">
-                                    <ui:VisualElement style="flex-grow: 1;" name="preview" />
+                                    <ui:VisualElement name="preview" style="flex-grow: 1;" />
                                 </ui:VisualElement>
-                            </AspectRatioPanel>
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-shrink: 1; flex-grow: 1;">
-                            <AspectRatioPanel aspect-ratio-x="1" aspect-ratio-y="1" balance-y="0" balance-x="50" name="AspectRatioPanel" style="padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; position: relative; top: 0; width: 100%;">
-                                <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/kenney/fantasy-ui/Panel/panel-003.png?fileID=2800000&amp;guid=e585b43f64a83f04fa912dba4bc64afd&amp;type=3#panel-003&apos;);" />
                             </AspectRatioPanel>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="bottom" style="flex-direction: row; justify-content: space-around; background-image: url(&apos;project://database/Assets/kenney/fantasy-ui/Border/panel-border-027.png?fileID=21300000&amp;guid=d8ea0dfe8ed020d4aa5701dae25b6d1a&amp;type=3#panel-border-027&apos;); padding-top: 7px; padding-right: 7px; padding-bottom: 7px; padding-left: 7px;">
-                    <ui:Label tabindex="-1" name="Name" text="Any button to connect" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; font-size: 18%; text-overflow: clip; -unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" name="Name" text="Press To Start" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; font-size: 18%; text-overflow: clip; -unity-font-style: bold;" />
                     <ui:VisualElement style="flex-grow: 1; flex-direction: row-reverse;">
-                        <AspectRatioPanel name="ReadyButton" aspect-ratio-x="1" aspect-ratio-y="1" style="background-image: url(&apos;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8228938214290033325&amp;guid=a5a22509884216d45a5dd26810145b0c&amp;type=3#console.erroricon&apos;);" />
+                        <AspectRatioPanel name="ReadyButton" aspect-ratio-x="1" aspect-ratio-y="1" style="background-image: url(&apos;project://database/Assets/kenney/inputprompts-ui/PlayStation%20Series/controller_playstation5.png?fileID=2800000&amp;guid=8971de044ed4dce4abe1f5f239e9c2f1&amp;type=3#controller_playstation5&apos;);" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
