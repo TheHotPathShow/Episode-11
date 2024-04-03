@@ -57,16 +57,8 @@ partial struct UISystem : ISystem, ISystemStartStop
 {
     class SingletonManaged : IComponentData
     {
-        public struct MenuActions
-        {
-            public Action<InputAction.CallbackContext> Jump;
-            public Action<InputAction.CallbackContext> Start;
-            public Action<InputAction.CallbackContext> Escape;
-        }
-        
         public bool4 slotOccupied;
         public bool4 playerReady;
-        public MenuActions[] menuActions;
         
         public int ClaimFirstAvailableSlot()
         {
@@ -118,15 +110,10 @@ partial struct UISystem : ISystem, ISystemStartStop
             // Set up the player selection menu
             var waitText = enterGameMenu.Q<Label>("WaitText");
             waitText.text = "Waiting for players (0/2)";
-            singletonManaged.menuActions = new SingletonManaged.MenuActions[4];
             
             // Listen for up to 4 controllers to be paired
             InputUser.listenForUnpairedDeviceActivity = 4;
-            InputUser.onUnpairedDeviceUsed += UnpairedDeviceUsed;
-            return;
-
-            // Local function to handle unpaired devices
-            void UnpairedDeviceUsed(InputControl control, InputEventPtr ptr)
+            InputUser.onUnpairedDeviceUsed += (control, _) =>
             {
                 if (!(control is ButtonControl)) 
                     return;
@@ -138,10 +125,12 @@ partial struct UISystem : ISystem, ISystemStartStop
                 if (availableSlot == -1)
                     return;
                 
+                // Pair the device with the user, making the playerController only act with the given device
                 var user = InputUser.PerformPairingWithDevice(control.device);
                 var playerController = new KyleInput();
                 playerController.Enable();
                 user.AssociateActionsWithUser(playerController);
+                
                 // if keyboard also pair with mouse
                 if (control.device.description.deviceClass == "Keyboard")
                 {
@@ -149,21 +138,20 @@ partial struct UISystem : ISystem, ISystemStartStop
                     if (mouse != null)
                         InputUser.PerformPairingWithDevice(mouse, user);
                 }
-
                 
-                // Debug.Log($"Created player controller {availableSlot + 1}");
-
                 // Set up the player preview images
                 var playerPane = UIHook.UIDocument.rootVisualElement.Q<VisualElement>($"Player{availableSlot + 1}Pane");
                 playerPane.Q<VisualElement>("preview").style.backgroundImage = Background.FromRenderTexture(UIHook.Instance.PlayerPreviews[availableSlot]);
                 playerPane.Q<Label>("Name").text = $"Not Ready (press to ready)";
                 
                 // List Controls in the UI
-                // Debug.Log($"Listing controls for `{control.device.description.interfaceName}:{control.device.description.product}`");
                 var texturesForController = UIHook.Instance.GetSchemeTextureCollectionFromName($"{control.device.description.interfaceName}:{control.device.description.product}");
                 var top = playerPane.Q<VisualElement>("top");
                 foreach (var action in playerController)
                 {
+                    if (action.actionMap == (InputActionMap)playerController.GameMenu)
+                        continue;
+                    
                     var actionElement = UIHook.Instance.PlayerInputDescription.CloneTree();
                     actionElement.Q<Label>("ActionName").text = action.name;
                     actionElement.Q<VisualElement>("Icon").style.backgroundImage = texturesForController.GetFromActionAndDevice(action, control.device);
@@ -171,25 +159,24 @@ partial struct UISystem : ISystem, ISystemStartStop
                 }
                 playerPane.Q<VisualElement>("ReadyButton").style.backgroundImage = texturesForController.GetFromActionAndDevice(playerController.Player.Jump, control.device);
 
-                var inputPuppetEntity = em.CreateEntity(stackalloc []{ ComponentType.ReadWrite<InputPuppetTag>() });
+                var inputPuppetEntity = em.CreateEntity(stackalloc []{ ComponentType.ReadWrite<InputPuppetTag>(), ComponentType.ReadWrite<OriginalOwnerSlotAndUserIndex>() });
                 em.SetName(inputPuppetEntity, $"InputPuppet for S{availableSlot + 1}");
                 em.AddComponentObject(inputPuppetEntity, new ControllerReference { Value = playerController });
-                em.AddComponentData(inputPuppetEntity, new OriginalOwnerSlotAndUserIndex
+                em.SetComponentData(inputPuppetEntity, new OriginalOwnerSlotAndUserIndex
                 {
                     SlotIndex = availableSlot,
                     UserIndex = user.index
                 });
                 
                 waitText.text = singletonManaged.GetWaitingPlayersText();
-                singletonManaged.menuActions[availableSlot].Jump = _ =>
+                playerController.GameMenu.Ready.started += _ =>
                 {
                     singletonManaged.playerReady[availableSlot] = !singletonManaged.playerReady[availableSlot];
                     playerPane.Q<Label>("Name").text = singletonManaged.playerReady[availableSlot] ? "Ready" : "Not Ready (press to ready)";
                     waitText.text = singletonManaged.GetWaitingPlayersText();
                 };
                 
-                playerController.Player.Jump.started += singletonManaged.menuActions[availableSlot].Jump;
-                singletonManaged.menuActions[availableSlot].Start += _ =>
+                playerController.GameMenu.EnterGame.started += _ =>
                 {
                     var (playersReady, totalRequiredPlayers) = singletonManaged.GetPlayerJoinStatus();
                     if (playersReady < 2 || playersReady < totalRequiredPlayers)
@@ -206,36 +193,28 @@ partial struct UISystem : ISystem, ISystemStartStop
                     var inputPuppets = puppets.ToComponentArray<ControllerReference>();
                     for (var i = 0; i < playersReady; i++)
                     {
-                        inputPuppets[i].Value.Player.Jump.started -= 
-                            singletonManaged.menuActions[originalOwners[i].SlotIndex].Jump;
-                        inputPuppets[i].Value.Player.Start.started -=
-                            singletonManaged.menuActions[originalOwners[i].SlotIndex].Start;
-                        inputPuppets[i].Value.Player.Escape.started -=
-                            singletonManaged.menuActions[originalOwners[i].SlotIndex].Escape;
-                        
+                        inputPuppets[i].Value.GameMenu.Disable();
                         var camForPlayer = SyncWithPlayerOrbitCamera.Instance[originalOwners[i].UserIndex];
                         camForPlayer.gameObject.SetActive(true);
 
-                        if (playersReady == 2)
+                        switch (playersReady)
                         {
-                            // Split the screen in half left and right
-                            // camForPlayer.rect = i == 0 ? new Rect(0, 0, 0.5f, 1) : new Rect(0.5f, 0, 0.5f, 1);
-                            // Split the screen in half top and bottom
-                            camForPlayer.rect = i == 0 ? new Rect(0, 0.5f, 1, 0.5f) : new Rect(0, 0, 1, 0.5f);
-                        }
-
-                        if (playersReady == 3)
-                        {
-                            UIHook.UIDocument.rootVisualElement.Q<VisualElement>("GameHideNotUsedPlayer4Region").style.display = DisplayStyle.Flex;
+                            case 2:
+                                // Split the screen in half top and bottom
+                                camForPlayer.rect = i == 0 ? new Rect(0, 0.5f, 1, 0.5f) : new Rect(0, 0, 1, 0.5f);
+                                break;
+                            case 3:
+                                UIHook.UIDocument.rootVisualElement.Q<VisualElement>("GameHideNotUsedPlayer4Region").style.display = DisplayStyle.Flex;
+                                break;
                         }
                     }
                     
                     enterGameMenu.style.display = DisplayStyle.None;
                     em.CreateEntity(stackalloc []{ ComponentType.ReadWrite<QueueToStartGame>() });
                 };
-                playerController.Player.Start.started += singletonManaged.menuActions[availableSlot].Start;
                 
-                singletonManaged.menuActions[availableSlot].Escape = _ =>
+                // Pressing escape in the menu will unpair the device
+                playerController.GameMenu.Cancel.started += _ =>
                 {
                     em.DestroyEntity(inputPuppetEntity);
                     playerPane.Q<VisualElement>("preview").style.backgroundImage = null;
@@ -248,10 +227,9 @@ partial struct UISystem : ISystem, ISystemStartStop
                     InputUser.listenForUnpairedDeviceActivity++;
                     waitText.text = singletonManaged.GetWaitingPlayersText();
                 };
-                playerController.Player.Escape.started += singletonManaged.menuActions[availableSlot].Escape;
                 
                 InputUser.listenForUnpairedDeviceActivity--;
-            }
+            };
         };
         
         UIHook.UIDocument.rootVisualElement.Q<Button>("Exit").clicked += () =>
