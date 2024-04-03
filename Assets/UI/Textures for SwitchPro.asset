@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15300a66ca4245c28d66f77d171cfd29, type: 3}
+  m_Name: Textures for SwitchPro
+  m_EditorClassIdentifier: 
+  Textures:
+  - Name: leftStick
+    Texture: {fileID: 2800000, guid: 9e07fad6ff68eb146907a13feba99444, type: 3}
+  - Name: rightStick
+    Texture: {fileID: 2800000, guid: acd040280b0a52544ad1ffdb78c40e72, type: 3}
+  - Name: buttonSouth
+    Texture: {fileID: 2800000, guid: 61dda89c7b7b1614bad9df92fddcff1b, type: 3}
+  - Name: rightShoulder
+    Texture: {fileID: 2800000, guid: 4fc5457ec8eb1164ca95f71528f6a355, type: 3}
+  - Name: start
+    Texture: {fileID: 2800000, guid: 9b74f21d9c1a2e742b81ae822ac9ee57, type: 3}
+  - Name: buttonEast
+    Texture: {fileID: 2800000, guid: d25ec12884ae5bb439c2256fbfc559dc, type: 3}

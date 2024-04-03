@@ -2860,6 +2860,8 @@ MonoBehaviour:
     TextureCollection: {fileID: 11400000, guid: 93090d21f6062de45b89526aeda97875, type: 2}
   - Name: 'XInput:'
     TextureCollection: {fileID: 11400000, guid: 970452377ab362045bb96cea27d4f5ec, type: 2}
+  - Name: HID:Wireless Gamepad
+    TextureCollection: {fileID: 11400000, guid: 2989c245a3f77484ab7f3fd777e6e6ae, type: 2}
 --- !u!1 &1398094500
 GameObject:
   m_ObjectHideFlags: 0
