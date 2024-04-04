@@ -22,7 +22,7 @@ public partial class ThirdPersonPlayerInputsSystem : SystemBase
     protected override void OnCreate()
     {
         RequireForUpdate<FixedTickSystem.Singleton>();
-        RequireForUpdate<QueueToStartGame>();
+        RequireForUpdate<IsInGame>();
     }
 
     protected override void OnStartRunning()
