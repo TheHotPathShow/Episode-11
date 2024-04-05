@@ -1,5 +1,6 @@
 ﻿# [The HotPath Show - Episode 11](https://www.youtube.com/watch?v=XqHDsXCfT-Q)
-![Unity_BN1puEa9kj](https://github.com/TheHotPathShow/Episode-9/assets/7334984/4427e306-0e55-4cef-9353-69fd62e29476)
+![image](https://github.com/TheHotPathShow/Episode-11/assets/7334984/bd2fb116-e246-4e73-98c1-a3fa7d0b1b07)
+
 
 ## 1. Input Handling basics
 
